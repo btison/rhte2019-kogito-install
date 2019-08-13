@@ -1,0 +1,16 @@
+---
+
+cluster_provisioner: user1
+
+namespace_strimzi_operator: kafka-operator
+namespace_kafka_cluster: kafka-cluster
+
+strimzi_cluster_operator: strimzi-cluster-operator
+
+uninstall_delete_project: false
+uninstall_cluster_resources: false
+
+kafka_cluster: kafka-cluster
+
+kafka_topics: >
+  [{"name": "test-topic", "partitions": "15", "replicas": "2", "config": "{}"}]
