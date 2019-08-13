@@ -1,0 +1,1 @@
+RHTE 2019 Kogito lab: installation of OpenShift assets
