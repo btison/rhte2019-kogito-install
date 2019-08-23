@@ -1,5 +1,7 @@
 ---
 
+cluster_provisioner: user1
+
 home_dir: "{{ playbook_dir }}/.."
 
 # resources dir

@@ -1,7 +1,5 @@
 ---
 
-cluster_provisioner: user1
-
 namespace_strimzi_operator: kafka-operator
 namespace_kafka_cluster: kafka-cluster
 
