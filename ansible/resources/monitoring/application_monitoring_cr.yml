@@ -1,0 +1,6 @@
+apiVersion: applicationmonitoring.integreatly.org/v1alpha1
+kind: ApplicationMonitoring
+metadata:
+  name: {{ application_monitoring_cr }}
+spec:
+  labelSelector: {{ application_monitoring_label_value }}

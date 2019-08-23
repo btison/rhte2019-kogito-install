@@ -1,0 +1,116 @@
+---
+
+- name: remove application monitoring cr
+  oc_obj:
+    state: absent
+    kind: ApplicationMonitoring
+    name: "{{ application_monitoring_cr }}"
+    oc_binary: "{{ openshift_cli }}"
+    namespace: "{{ namespace }}"
+
+- name: delete operator deployment
+  oc_obj:
+    state: absent
+    kind: Deployment
+    name: "{{ application_monitoring_operator_deployment }}"
+    oc_binary: "{{ openshift_cli }}"
+    namespace: "{{ namespace }}"
+
+- name: delete operator rolebinding
+  oc_obj:
+    state: absent
+    kind: RoleBinding
+    name: "{{ application_monitoring_operator_rolebinding }}"
+    oc_binary: "{{ openshift_cli }}"
+    namespace: "{{ namespace }}"
+
+- name: delete operator role
+  oc_obj:
+    state: absent
+    kind: Role
+    name: "{{ application_monitoring_operator_role }}"
+    oc_binary: "{{ openshift_cli }}"
+    namespace: "{{ namespace }}"
+
+- name: create operator serviceaccount
+  oc_obj:
+    state: absent
+    kind: ServiceAccount
+    name: "{{ application_monitoring_operator_sa }}"
+    oc_binary: "{{ openshift_cli }}"
+    namespace: "{{ namespace }}"
+
+- name: delete prometheus operator clusterrole binding
+  oc_obj:
+    state: absent
+    kind: ClusterRoleBinding
+    name: "{{ monitoring_prometheus_operator_clusterrolebinding }}"
+    oc_binary: "{{ openshift_cli }}"
+
+- name: delete grafana clusterrole binding
+  oc_obj:
+    state: absent
+    kind: ClusterRoleBinding
+    name: "{{ monitoring_grafana_clusterrolebinding }}"
+    oc_binary: "{{ openshift_cli }}"
+
+- name: delete alertmanager clusterrole binding
+  oc_obj:
+    state: absent
+    kind: ClusterRoleBinding
+    name: "{{ monitoring_alertmanager_clusterrolebinding }}"
+    oc_binary: "{{ openshift_cli }}"
+
+- name: delete prometheus clusterrole binding
+  oc_obj:
+    state: absent
+    kind: ClusterRoleBinding
+    name: "{{ monitoring_prometheus_clusterrolebinding }}"
+    oc_binary: "{{ openshift_cli }}"
+
+- name: delete application monitoring crd
+  oc_obj:
+    state: absent
+    kind: crd
+    name: "{{ application_monitoring_crd }}"
+    oc_binary: "{{ openshift_cli }}"
+  when: uninstall_cluster_resources|bool == true
+
+- name: delete grafana dashboard crd
+  oc_obj:
+    state: absent
+    kind: crd
+    name: "{{ grafana_dashboard_crd }}"
+    oc_binary: "{{ openshift_cli }}"
+  when: uninstall_cluster_resources|bool == true
+
+- name: delete grafana clusterrole
+  oc_obj:
+    state: absent
+    kind: clusterrole
+    name: "{{ grafana_clusterrole }}"
+    oc_binary: "{{ openshift_cli }}"
+  when: uninstall_cluster_resources|bool == true
+
+- name: delete grafana crd
+  oc_obj:
+    state: absent
+    kind: crd
+    name: "{{ grafana_crd }}"
+    oc_binary: "{{ openshift_cli }}"
+  when: uninstall_cluster_resources|bool == true
+
+- name: delete rolebinding
+  oc_obj:
+    state: absent
+    kind: rolebinding
+    name: "{{ cluster_provisioner }}-admin"
+    namespace: "{{ namespace }}"
+    oc_binary: "{{ openshift_cli }}"
+
+- name: delete project {{ namespace }}
+  oc_project:
+    state: absent
+    oc_binary: "{{ openshift_cli }}"
+    name: "{{ namespace }}"
+  when: uninstall_delete_project|bool == true
